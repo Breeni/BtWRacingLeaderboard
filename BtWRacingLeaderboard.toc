@@ -1,0 +1,15 @@
+## Interface: 110002
+## Title: Racing Leaderboard
+## Version: 1.0.0
+## Notes: 
+## Author: Breen
+## SavedVariables: RacingLeaderboard_Characters, RacingLeaderboard_Races, RacingLeaderboard_LDBIcon
+## AddonCompartmentFunc: RacingLeaderboard_Toggle
+## IconTexture: Interface\ICONS\ability_dragonriding_upwardflap01
+
+Libs.xml
+Races.lua
+Characters.lua
+Sync.lua
+DataBroker.lua
+UI.xml

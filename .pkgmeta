@@ -1,0 +1,13 @@
+package-as: BtWRacingLeaderboard
+
+externals:
+    Libs/LibStub: https://repos.curseforge.com/wow/libstub/trunk
+    Libs/LibDataBroker-1.1: https://github.com/tekkub/libdatabroker-1-1
+    Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
+    Libs/ChatThrottleLib: https://repos.wowace.com/wow/chatthrottlelib/trunk
+
+ignore:
+    - README.md
+    - .luacheckrc
+
+enable-nolib-creation: no

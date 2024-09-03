@@ -1,0 +1,115 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+	<Script file="UI.lua"/>
+
+	<Button name="RacingLeaderboardEntryTemplate" mixin="RacingLeaderboardEntryMixin" inherits="CallbackRegistrantTemplate" virtual="true">
+		<Size y="18"/>
+        <Layers>
+            <Layer level="OVERLAY">
+                <FontString parentKey="Rank" inherits="GameFontHighlight" justifyH="LEFT">
+                    <Size x="28" y="15"/>
+                    <Anchors>
+                        <Anchor point="LEFT"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Name" inherits="GameFontHighlight" justifyH="LEFT">
+                    <Size x="180" y="15"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeKey="$parent.Rank" relativePoint="RIGHT" x="6"/>
+                    </Anchors>
+                </FontString>
+                <FontString parentKey="Score" inherits="GameFontHighlight" justifyH="LEFT">
+                    <Size y="15"/>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeKey="$parent.Name" relativePoint="RIGHT"/>
+                        <Anchor point="RIGHT"/>
+                    </Anchors>
+                </FontString>
+            </Layer>
+        </Layers>
+	</Button>
+
+    <Frame name="RacingLeaderboardFrame" mixin="RacingLeaderboardFrameMixin" inherits="DefaultPanelTemplate" toplevel="true" enableMouse="true" parent="UIParent" hidden="true" resizable="true" movable="true">
+		<Size x="405" y="496"/>
+		<Anchors>
+			<Anchor point="CENTER" x="0" y="0"/>
+		</Anchors>
+		<ResizeBounds>
+			<minResize x="405" y="300"/>
+			<maxResize x="405" y="603"/>
+		</ResizeBounds>
+        <Frames>
+            <Button parentKey="CloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" x="1" y="0"/>
+                </Anchors>
+            </Button>
+            <DropdownButton parentKey="RaceDropdown" inherits="WowStyle1DropdownTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="16" y="-34"/>
+                </Anchors>
+            </DropdownButton>
+            <DropdownButton parentKey="DifficultyDropdown" inherits="WowStyle1DropdownTemplate">
+                <Anchors>
+                    <Anchor point="LEFT" x="10" y="0" relativeKey="$parent.RaceDropdown" relativePoint="RIGHT"/>
+                </Anchors>
+            </DropdownButton>
+            <Button parentKey="TrackButton" frameLevel="510">
+                <Anchors>
+                    <Anchor point="LEFT" x="5" y="0" relativeKey="$parent.DifficultyDropdown" relativePoint="RIGHT"/>
+                </Anchors>
+				<Size x="24" y="24"/>
+				<DisabledTexture atlas="Waypoint-MapPin-Untracked"/>
+				<NormalTexture atlas="Waypoint-MapPin-Untracked"/>
+				<PushedTexture atlas="Waypoint-MapPin-Tracked"/>
+				<Scripts>
+					<OnClick>
+						self:GetParent():SuperTrack();
+					</OnClick>
+				</Scripts>
+            </Button>
+			<Frame parentKey="Inset" useParentLevel="true" inherits="InsetFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="6" y="-66" />
+					<Anchor point="BOTTOMRIGHT" x="-6" y="6" />
+				</Anchors>
+			</Frame>
+			<Frame parentKey="ScrollBox" inherits="WowScrollBoxList" frameStrata="MEDIUM">
+				<Anchors>
+					<Anchor point="TOPLEFT" x="6" y="-70"/>
+					<Anchor point="BOTTOMRIGHT" x="-32" y="6" />
+				</Anchors>
+			</Frame>
+			<EventFrame parentKey="ScrollBar" inherits="MinimalScrollBar" frameStrata="HIGH">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeKey="$parent.ScrollBox" relativePoint="TOPRIGHT" x="5" y="-2"/>
+					<Anchor point="BOTTOMLEFT" relativeKey="$parent.ScrollBox" relativePoint="BOTTOMRIGHT" x="5" y="4"/>
+				</Anchors>
+			</EventFrame>
+			<Button parentKey="Resize" frameLevel="501">
+				<Size x="16" y="16"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						self:GetParent():StartSizing("BOTTOMRIGHT")
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing()
+					</OnMouseUp>
+				</Scripts>
+				<NormalTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Up"/>
+				<HighlightTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Highlight"/>
+				<PushedTexture file="Interface\ChatFrame\UI-ChatIM-SizeGrabber-Down"/>
+			</Button>
+		</Frames>
+		<Scripts>
+            <OnLoad method="OnLoad"/>
+            <OnShow method="OnShow"/>
+			<OnDragStart method="OnDragStart"/>
+			<OnDragStop method="OnDragStop"/>
+			<OnEvent method="OnEvent"/>
+		</Scripts>
+	</Frame>
+</Ui>
