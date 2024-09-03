@@ -441,6 +441,15 @@ EventRegistry:RegisterFrameEventAndCallback("CHAT_MSG_ADDON",
                 packet.id, channel, sender, packet.name, packet.realm, packet.timestamp))
             --@end-debug@
             if channel == "GUILD" then
+                local senderName, senderRealm = strsplit("-", sender)
+                local senderMember = GetGuildMember(senderName, senderRealm)
+                if senderMember then
+                    local character = Internal.GetCharacter(senderMember.name, senderMember.realm)
+                    if not character then
+                        Internal.AddCharacter(senderMember.name, senderMember.realm, senderMember.class)
+                    end
+                end
+
                 if not GetGuildMember(packet.name, packet.realm) then
                     return -- Dont sync data for people not in the guild
                 end
@@ -576,6 +585,15 @@ EventRegistry:RegisterFrameEventAndCallback("CHAT_MSG_ADDON",
                 packet.id, channel, sender, packet.name, packet.realm, packet.timestamp))
             --@end-debug@
             if channel == "GUILD" then
+                local senderName, senderRealm = strsplit("-", sender)
+                local senderMember = GetGuildMember(senderName, senderRealm)
+                if senderMember then
+                    local character = Internal.GetCharacter(senderMember.name, senderMember.realm)
+                    if not character then
+                        Internal.AddCharacter(senderMember.name, senderMember.realm, senderMember.class)
+                    end
+                end
+
                 if not GetGuildMember(packet.name, packet.realm) then
                     return
                 end
