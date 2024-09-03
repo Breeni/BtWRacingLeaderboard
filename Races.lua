@@ -760,7 +760,7 @@ EventRegistry:RegisterFrameEventAndCallback("CURRENCY_DISPLAY_UPDATE",
                     }
                 end
             end
-            --@debug@
+            --@end-debug@
             return
         end
         if quantity == 0 then -- Previous personal best record
