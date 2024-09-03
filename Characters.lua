@@ -97,41 +97,40 @@ function Internal.GetCharacter(name, realm)
     end
 
     local result = Characters[key]
-    if result then
-        return result
+    if not result then
+        ---@type CharacterData | nil
+        local tbl = RacingLeaderboard_Characters[key]
+
+        local playerName = UnitName("player")
+        local playerRealm = GetNormalizedRealmName()
+        local playerKey = playerName .. "-" .. playerRealm
+        if playerKey == key then
+            if not tbl then
+                tbl = {
+                    name = playerName,
+                    realm = GetNormalizedRealmName(),
+                    class = select(2, UnitClass("player")),
+                    owned = true,
+                    verified = true,
+                    scores = {},
+                    timestamps = {},
+                    lastUpdated = 0,
+                }
+                RacingLeaderboard_Characters[key] = tbl
+            end
+
+            result = Mixin({}, PlayerMixin, { t = tbl })
+        else
+            if not tbl then
+                return nil
+            end
+
+            result = Mixin({}, CharacterMixin, { t = tbl })
+        end
+        Characters[key] = result
     end
 
-    ---@type CharacterData | nil
-    local tbl = RacingLeaderboard_Characters[key]
-
-    local playerName = UnitName("player")
-    local playerRealm = GetNormalizedRealmName()
-    local playerKey = playerName .. "-" .. playerRealm
-    if playerKey == key then
-        if not tbl then
-            tbl = {
-                name = playerName,
-                realm = GetNormalizedRealmName(),
-                class = select(2, UnitClass("player")),
-                owned = true,
-                verified = true,
-                scores = {},
-                timestamps = {},
-                lastUpdated = 0,
-            }
-            RacingLeaderboard_Characters[key] = tbl
-        end
-
-        Characters[key] = Mixin(PlayerMixin, { t = tbl })
-    else
-        if not tbl then
-            return nil
-        end
-
-        Characters[key] = Mixin(CharacterMixin, { t = tbl })
-    end
-
-    return Characters[key]
+    return result
 end
 function Internal.GetPlayer()
     local result = Internal.GetCharacter(UnitName("player"), GetNormalizedRealmName())
@@ -153,8 +152,9 @@ function Internal.AddCharacter(name, realm, class)
             lastUpdated = 0,
         }
         RacingLeaderboard_Characters[key] = tbl
+        result = Internal.GetCharacter(name, realm)
     end
-    return Internal.GetCharacter(name, realm)
+    return result
 end
 function Internal.RemoveCharacter(name, realm)
     local key
