@@ -784,8 +784,3 @@ EventRegistry:RegisterFrameEventAndCallback("CURRENCY_DISPLAY_UPDATE",
 -- 2040, 2041, 2131, 2132
 -- 2944, 2944
 -- 2040, 2041, 2131, 2132
-
-
-TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.UnitAura, function(self, data)
-    _G['data'] = data
-end)
