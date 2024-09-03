@@ -1,6 +1,6 @@
 ## Interface: 110002
 ## Title: Racing Leaderboard
-## Version: 1.0.0
+## Version: @project-version@
 ## Notes: 
 ## Author: Breen
 ## SavedVariables: RacingLeaderboard_Characters, RacingLeaderboard_Races, RacingLeaderboard_LDBIcon
