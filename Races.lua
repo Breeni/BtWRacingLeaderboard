@@ -736,29 +736,31 @@ EventRegistry:RegisterFrameEventAndCallback("CURRENCY_DISPLAY_UPDATE",
         if not race then
             --@debug@
             if currency.name:find("^Dragon Racing %- Personal Best Record") then
-                local name, uiMapID, areaPoiID, gold, silver = GetCompletedRaceDetails()
-                if uiMapID then
-                    local difficultyID = GuessRaceDifficulty(currency)
+                C_Timer.After(0.2, function ()
+                    local name, uiMapID, areaPoiID, gold, silver = GetCompletedRaceDetails()
+                    if uiMapID then
+                        local difficultyID = GuessRaceDifficulty(currency)
 
-                    local difficultyName = DifficultyNames[difficultyID];
-                    name = string.format("%s %s", name, difficultyName or "Basic");
+                        local difficultyName = DifficultyNames[difficultyID];
+                        name = string.format("%s %s", name, difficultyName or "Basic");
 
-                    print(string.format(
-                        "[%s]: An unknown race has been found - [%d] %s (map: %d, poi: %d, difficulty: %d, gold: %d, silver: %d).",
-                        ADDON_NAME, currencyID, name, uiMapID, areaPoiID, difficultyID, gold, silver))
-                    if not RacingLeaderboard_Races then
-                        RacingLeaderboard_Races = {}
+                        print(string.format(
+                            "[%s]: An unknown race has been found - [%d] %s (map: %d, poi: %d, difficulty: %d, gold: %d, silver: %d).",
+                            ADDON_NAME, currencyID, name, uiMapID, areaPoiID, difficultyID, gold, silver))
+                        if not RacingLeaderboard_Races then
+                            RacingLeaderboard_Races = {}
+                        end
+
+                        RacingLeaderboard_Races[currencyID] = {
+                            name = name,
+                            currencyID = currencyID,
+                            uiMapID = uiMapID,
+                            areaPoiID = areaPoiID,
+                            difficultyID = difficultyID,
+                            rankTimers = { gold * 1000, silver * 1000 },
+                        }
                     end
-
-                    RacingLeaderboard_Races[currencyID] = {
-                        name = name,
-                        currencyID = currencyID,
-                        uiMapID = uiMapID,
-                        areaPoiID = areaPoiID,
-                        difficultyID = difficultyID,
-                        rankTimers = { gold * 1000, silver * 1000 },
-                    }
-                end
+                end)
             end
             --@end-debug@
             return
