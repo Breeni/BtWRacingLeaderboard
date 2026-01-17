@@ -710,7 +710,7 @@ function Internal.IteratePOIs()
 
         local poi = C_AreaPoiInfo.GetAreaPOIInfo(uiMapID, areaPoiID)
 
-        return index, { name = poi.name, uiMapID = uiMapID, areaPoiID = areaPoiID, raceIDs = raceIDs }
+        return index, { name = poi and poi.name or "Unknown", uiMapID = uiMapID, areaPoiID = areaPoiID, raceIDs = raceIDs }
     end, pois, 0
 end
 
