@@ -136,6 +136,17 @@ function RacingLeaderboardFrameMixin:UpdateTrackButton()
     self.TrackButton:SetNormalAtlas(self:IsSuperTracked() and "Waypoint-MapPin-Tracked" or "Waypoint-MapPin-Untracked")
     self.TrackButton:SetPushedAtlas(self:IsSuperTracked() and "Waypoint-MapPin-Untracked" or "Waypoint-MapPin-Tracked")
 end
+function RacingLeaderboardFrameMixin:ShowSettingsMenu()
+    MenuUtil.CreateContextMenu(UIParent, function(ownerRegion, rootDescription)
+        rootDescription:CreateTitle("Remove Characters")
+        for _,character in Internal.IterateCharacters() do
+            rootDescription:CreateButton(character.name, function()
+                Internal.RemoveCharacter(character.key)
+                self:Update()
+            end)
+        end
+    end)
+end
 
 function RacingLeaderboard_Toggle()
     RacingLeaderboardFrame:SetShown(not RacingLeaderboardFrame:IsShown());

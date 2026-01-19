@@ -15,6 +15,7 @@ local launcher = LDB:NewDataObject(ADDON_NAME, {
         if button == "LeftButton" then
             RacingLeaderboard_Toggle()
         elseif button == "RightButton" then
+            RacingLeaderboardFrame:ShowSettingsMenu()
         end
     end,
     OnTooltipShow = function(tooltip)

@@ -220,6 +220,29 @@ function Internal.GetCharactersForRace(raceID)
 
     return tbl
 end
+function Internal.IterateCharacters()
+    local tbl = {}
+    for _,character in pairs(RacingLeaderboard_Characters) do
+        local character = Internal.GetCharacter(character.name, character.realm)
+        if character then
+            local color = C_ClassColor.GetClassColor(character:GetClass())
+            tbl[#tbl+1] = {
+                key = string.format("%s-%s", character:GetName(), character:GetRealm()),
+                realm = character:GetRealm(),
+                name = string.format("%s - %s", color:WrapTextInColorCode(character:GetName()), character:GetRealm())
+            }
+        end
+    end
+
+    table.sort(tbl, function (a, b)
+        if a.realm == b.realm then
+            return a.key < b.key
+        end
+        return a.realm < b.realm
+    end)
+
+    return ipairs(tbl)
+end
 
 EventRegistry:RegisterFrameEventAndCallback("ADDON_LOADED", function(_, addonName)
     if addonName == ADDON_NAME then
