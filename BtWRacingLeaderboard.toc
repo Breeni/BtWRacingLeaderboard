@@ -1,4 +1,4 @@
-## Interface: 110205, 110207, 120000
+## Interface: 110205, 110207, 120000, 120001
 ## Title: Racing Leaderboard
 ## Version: @project-version@
 ## Notes: 
